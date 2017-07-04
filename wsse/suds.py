@@ -5,6 +5,7 @@ from suds.plugin import MessagePlugin
 
 from .encryption import encrypt, decrypt
 from .signing import sign, verify
+from lxml import etree
 
 
 class WssePlugin(MessagePlugin):
@@ -48,10 +49,10 @@ class WssePlugin(MessagePlugin):
         """Sign and encrypt outgoing message envelope."""
         context.envelope = sign(
             context.envelope, self.keyfile, self.certfile)
-        context.envelope = encrypt(context.envelope, self.their_certfile)
+        # context.envelope = encrypt(context.envelope, self.their_certfile)
 
     def received(self, context):
         """Decrypt and verify signature of incoming reply envelope."""
         if context.reply:
-            context.reply = decrypt(context.reply, self.keyfile)
+            # context.reply = decrypt(context.reply, self.keyfile)
             verify(context.reply, self.their_certfile)
